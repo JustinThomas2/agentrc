@@ -45,6 +45,9 @@ link "$REPO_DIR/zsh/.zshrc"      "$HOME/.zshrc"
 link "$REPO_DIR/git/.gitconfig"  "$HOME/.gitconfig"
 link "$REPO_DIR/git/.githooks"   "$HOME/.githooks"   # global hooks (core.hooksPath in .gitconfig)
 
+# starship prompt
+link "$REPO_DIR/starship/starship.toml"  "$HOME/.config/starship.toml"
+
 # Claude Code
 link "$REPO_DIR/claude/CLAUDE.md"      "$HOME/.claude/CLAUDE.md"
 link "$REPO_DIR/claude/settings.json"  "$HOME/.claude/settings.json"

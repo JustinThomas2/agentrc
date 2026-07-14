@@ -10,6 +10,7 @@ This repo is **public**. Everything private or machine-specific lives in a separ
 zsh/            .zshrc (symlinked to ~/.zshrc)
 git/            .gitconfig (symlinked to ~/.gitconfig)
   .githooks/    global git hooks (symlinked to ~/.githooks, used via core.hooksPath)
+starship/       starship.toml (symlinked to ~/.config/starship.toml)
 agents/         AGENTS.md — shared agent instructions, single source of truth
   mcp/          servers.json.example (real servers.json is gitignored — often holds tokens)
 claude/         CLAUDE.md + settings.json (symlinked into ~/.claude/)
