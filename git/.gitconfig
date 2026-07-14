@@ -6,3 +6,21 @@
 [include]
 	# Private/machine-local layer. Git silently skips this if the file is missing.
 	path = ~/.gitconfig.local
+
+[user]
+	email = Justintt5365@gmail.com
+	name = Justin Thomas
+[alias]
+	cm = "!f() { git commit -m \"$*\"; }; f"
+	lastcm = show --stat HEAD
+	alias = config --global --get-regexp ^alias\\.
+	diffcopy = "!f() { root=$(git rev-parse --show-toplevel) || exit 1; git -C \"$root\" diff -- . \":(exclude)package-lock.json\" \":(glob,exclude)**/package-lock.json\" | clip.exe; echo \"Copied unstaged diff to clipboard, excluding package-lock.json.\"; }; f"
+	diffcopycached = "!f() { root=$(git rev-parse --show-toplevel) || exit 1; git -C \"$root\" diff --cached -- . \":(exclude)package-lock.json\" \":(glob,exclude)**/package-lock.json\" | clip.exe; echo \"Copied staged diff to clipboard, excluding package-lock.json.\"; }; f"
+	watch = !watch -n 1 --color \"git -c color.status=always status --short\"
+	amend = commit --amend --no-edit
+	co = checkout
+	sw = "!f() { if [ \"$#\" -eq 0 ]; then git switch -; else git switch \"$@\"; fi; }; f"
+[init]
+	defaultBranch = main
+[core]
+	hooksPath = /home/justin/.githooks
