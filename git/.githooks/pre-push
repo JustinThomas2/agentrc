@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ "$CLAUDECODE" != "1" ]; then
+  exit 0
+fi
+
+while read local_ref local_sha remote_ref remote_sha; do
+  TARGET=$(echo "$remote_ref" | sed 's#refs/heads/##')
+  if [ "$TARGET" = "main" ] || [ "$TARGET" = "master" ]; then
+    echo "Claude Code cannot push to '$TARGET'." >&2
+    exit 1
+  fi
+done
