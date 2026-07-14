@@ -23,4 +23,5 @@
 [init]
 	defaultBranch = main
 [core]
-	hooksPath = /home/justin/.githooks
+	# ~ expands (pathname-type setting); keeps this portable across machines.
+	hooksPath = ~/.githooks

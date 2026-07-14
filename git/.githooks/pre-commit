@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ "$CLAUDECODE" != "1" ]; then
+  exit 0
+fi
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
+  echo "Claude Code cannot commit directly to '$BRANCH'." >&2
+  exit 1
+fi
+exit 0

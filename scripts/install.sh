@@ -43,6 +43,7 @@ link() {
 # zsh + git
 link "$REPO_DIR/zsh/.zshrc"      "$HOME/.zshrc"
 link "$REPO_DIR/git/.gitconfig"  "$HOME/.gitconfig"
+link "$REPO_DIR/git/.githooks"   "$HOME/.githooks"   # global hooks (core.hooksPath in .gitconfig)
 
 # Claude Code
 link "$REPO_DIR/claude/CLAUDE.md"      "$HOME/.claude/CLAUDE.md"
