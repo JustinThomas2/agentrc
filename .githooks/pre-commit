@@ -50,3 +50,9 @@ if [[ "$fail" -ne 0 ]]; then
   echo "pre-commit: commit blocked. If this is a false positive, bypass once with 'git commit --no-verify'." >&2
   exit 1
 fi
+
+# Chain to the global hooks — this repo's local core.hooksPath overrides
+# ~/.githooks, so run the global pre-commit explicitly.
+if [[ -x "$HOME/.githooks/pre-commit" ]]; then
+  exec "$HOME/.githooks/pre-commit" "$@"
+fi

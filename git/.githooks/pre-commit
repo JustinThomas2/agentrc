@@ -1,11 +1,20 @@
 #!/bin/bash
-if [ "$CLAUDECODE" != "1" ]; then
-  exit 0
+# Global pre-commit (core.hooksPath = ~/.githooks).
+
+# Block Claude Code from committing directly to main/master.
+if [ "$CLAUDECODE" = "1" ]; then
+  BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
+    echo "Claude Code cannot commit directly to '$BRANCH'." >&2
+    exit 1
+  fi
 fi
 
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
-  echo "Claude Code cannot commit directly to '$BRANCH'." >&2
-  exit 1
+# Chain to the repo's own hook if it has one — git runs exactly one
+# hooksPath, so without this a global path silences .git/hooks/pre-commit
+# (e.g. hooks installed by npm packages or 'pre-commit install').
+repo_hook="$(git rev-parse --git-dir)/hooks/pre-commit"
+if [ -x "$repo_hook" ]; then
+  exec "$repo_hook" "$@"
 fi
 exit 0
