@@ -48,6 +48,7 @@ link "$REPO_DIR/git/.githooks"   "$HOME/.githooks"   # global hooks (core.hooksP
 # Claude Code
 link "$REPO_DIR/claude/CLAUDE.md"      "$HOME/.claude/CLAUDE.md"
 link "$REPO_DIR/claude/settings.json"  "$HOME/.claude/settings.json"
+link "$REPO_DIR/claude/hooks"          "$HOME/.claude/hooks"
 link "$REPO_DIR/agents/AGENTS.md"      "$HOME/.claude/AGENTS.md"
 
 # Codex (reads AGENTS.md natively; real config.toml is gitignored and optional)
