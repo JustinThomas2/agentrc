@@ -1,0 +1,37 @@
+# --- Private layer (.local companions live in a separate private repo) ---
+*.local
+*.local.*
+settings.local.json
+
+# --- Secrets ---
+.env*
+*.key
+*.pem
+*.token
+secrets/
+
+# --- Real configs that may hold tokens (commit *.example only) ---
+codex/config.toml
+agents/mcp/servers.json
+!*.example
+.claude.json
+
+# --- External skills (fetched by scripts/fetch-skills.sh, never committed) ---
+skills/external/
+
+# --- zsh runtime files ---
+.zsh_history
+.zcompdump*
+.zsh_sessions/
+
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editor cruft ---
+*.swp
+*.swo
+*~
+.idea/
+.vscode/

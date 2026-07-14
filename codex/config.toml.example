@@ -1,0 +1,13 @@
+# ~/.codex/config.toml — EXAMPLE ONLY
+#
+# Codex cannot layer config files, so the real config.toml is gitignored.
+# Copy this file to codex/config.toml, fill in real values, then re-run
+# scripts/install.sh to symlink it into ~/.codex/config.toml.
+
+model = "your-model-here"
+approval_policy = "untrusted"
+
+# [mcp_servers.example]
+# command = "npx"
+# args = ["-y", "@example/mcp-server"]
+# env = { EXAMPLE_API_KEY = "YOUR_TOKEN_HERE" }

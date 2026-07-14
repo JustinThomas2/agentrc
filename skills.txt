@@ -1,0 +1,13 @@
+# External skills manifest — one skill per line, pinned as URL@version.
+#
+# Format:  <git-clone-url>@<tag-or-commit-sha>
+#   - The skill's directory name is derived from the repo name.
+#   - Pin to a tag or full commit SHA, never a branch, so installs are
+#     reproducible and updates are an explicit edit to this file.
+#
+# scripts/fetch-skills.sh reads this file and clones each entry into
+# skills/external/<name>/ (gitignored — external skills are referenced,
+# never vendored/committed, and retain their own licenses).
+#
+# Example:
+# https://github.com/example-org/example-skill@v1.2.0

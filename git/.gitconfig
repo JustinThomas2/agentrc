@@ -1,0 +1,8 @@
+# ~/.gitconfig (symlinked from agentrc/git/.gitconfig)
+#
+# PLACEHOLDER: real git config goes here (aliases, core settings, diff/merge).
+# Identity, signing keys, and machine-specific bits belong in ~/.gitconfig.local.
+
+[include]
+	# Private/machine-local layer. Git silently skips this if the file is missing.
+	path = ~/.gitconfig.local

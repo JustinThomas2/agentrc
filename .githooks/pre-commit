@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Pre-commit secret scan with gitleaks. Enabled via:
+#   git config core.hooksPath .githooks
+# (scripts/install.sh does this for you.)
+set -euo pipefail
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-commit: gitleaks is not installed — refusing to commit unscanned changes." >&2
+  echo "Install it (https://github.com/gitleaks/gitleaks) or bypass once with 'git commit --no-verify'." >&2
+  exit 1
+fi
+
+# gitleaks >= 8.19 uses 'git --pre-commit'; older releases use 'protect'.
+if gitleaks git --help >/dev/null 2>&1; then
+  gitleaks git --pre-commit --staged --redact --verbose
+else
+  gitleaks protect --staged --redact --verbose
+fi
