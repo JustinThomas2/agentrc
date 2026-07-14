@@ -57,7 +57,7 @@ else
   echo "note    codex/config.toml not present (copy codex/config.toml.example to create it)"
 fi
 
-# Enable the committed pre-commit hook (gitleaks) for this repo.
+# Enable the committed pre-commit hook (secret checks) for this repo.
 git -C "$REPO_DIR" config core.hooksPath .githooks
 echo "ok      core.hooksPath = .githooks"
 

@@ -67,11 +67,13 @@ cd agentrc
 
 Re-running either script is safe. To pick up new external skill pins later, edit `skills.txt` and re-run `fetch-skills.sh`.
 
-## Secret scanning
+## Secret hygiene
 
-A committed pre-commit hook (`.githooks/pre-commit`) runs [gitleaks](https://github.com/gitleaks/gitleaks) on staged changes; `install.sh` enables it via `git config core.hooksPath .githooks`. Install gitleaks locally or the hook will refuse to commit.
+No third-party scanning tools — the safety rails are deliberately self-contained:
 
-Also enable **GitHub push protection** on the repo (Settings → Code security → Secret scanning → Push protection) as a server-side backstop — hooks can be bypassed, push protection can't.
+1. **`.gitignore` is the primary rail.** Real configs that can hold tokens (`codex/config.toml`, `agents/mcp/servers.json`), `.local` files, `.env*`, keys, and `secrets/` are all ignored; only `*.example` placeholders are committed.
+2. **`.githooks/pre-commit`** (own script, zero dependencies) refuses to commit any staged file that `.gitignore` says to ignore (catches accidental `git add -f`), and scans added lines for high-signal secret formats — private keys and AWS/GitHub/Slack/Anthropic/OpenAI/Google token shapes. Extend its patterns array as needed. `install.sh` enables it via `git config core.hooksPath .githooks`.
+3. Enable **GitHub push protection** on the repo (Settings → Code security → Secret scanning → Push protection) as a server-side backstop — hooks can be bypassed, push protection can't.
 
 ## License
 
