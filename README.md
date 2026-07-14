@@ -17,7 +17,7 @@ skills/         my own skills, one folder per skill (agentskills.io format)
   external/     gitignored — third-party skills fetched at install time
 skills.txt      manifest of external skills, pinned as URL@version
 scripts/        install.sh, fetch-skills.sh
-.githooks/      pre-commit gitleaks scan
+.githooks/      pre-commit secret checks (no third-party tools)
 ```
 
 ## Symlink strategy
@@ -59,7 +59,7 @@ Codex's `config.toml` and MCP `servers.json` cannot be layered, so only `.exampl
 ## Install
 
 ```sh
-git clone https://github.com/<you>/agentrc.git
+git clone https://github.com/JustinThomas2/agentrc.git
 cd agentrc
 ./scripts/install.sh        # symlink zsh/git/claude/codex files, enable git hooks
 ./scripts/fetch-skills.sh   # fetch pinned external skills + link all skills

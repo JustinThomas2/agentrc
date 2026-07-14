@@ -1,37 +1,138 @@
-# --- Private layer (.local companions live in a separate private repo) ---
-*.local
-*.local.*
-settings.local.json
+# ---------------------------------------------------------------------------
+# Secrets and credentials
+# ---------------------------------------------------------------------------
 
-# --- Secrets ---
-.env*
-*.key
+.env
+.env.*
+!.env.example
+
 *.pem
+*.key
+*.p12
+*.pfx
 *.token
+
+.credentials.json
+credentials.json
+auth.json
+secrets.json
+secrets.*
 secrets/
 
-# --- Real configs that may hold tokens (commit *.example only) ---
+# ---------------------------------------------------------------------------
+# Real configs that can hold tokens (commit *.example placeholders only)
+# ---------------------------------------------------------------------------
+
 codex/config.toml
 agents/mcp/servers.json
-!*.example
-.claude.json
 
-# --- External skills (fetched by scripts/fetch-skills.sh, never committed) ---
+# ---------------------------------------------------------------------------
+# Machine-specific configuration
+# ---------------------------------------------------------------------------
+
+*.local
+*.local.*
+*.local.json
+*.local.toml
+*.local.yaml
+*.local.yml
+
+.zshrc.local
+.gitconfig.local
+settings.local.json
+
+# ---------------------------------------------------------------------------
+# External skills (fetched by scripts/fetch-skills.sh, never committed)
+# ---------------------------------------------------------------------------
+
 skills/external/
 
-# --- zsh runtime files ---
-.zsh_history
-.zcompdump*
-.zsh_sessions/
+# ---------------------------------------------------------------------------
+# Claude runtime state
+# ---------------------------------------------------------------------------
 
-# --- OS cruft ---
+claude/.credentials.json
+claude/history.jsonl
+claude/projects/
+claude/sessions/
+claude/cache/
+claude/daemon/
+claude/jobs/
+claude/backups/
+claude/downloads/
+claude/file-history/
+claude/paste-cache/
+claude/session-env/
+claude/shell-snapshots/
+
+# Protect against accidentally copying ~/.claude or ~/.claude.json into the repo
+.claude/
+.claude.json
+
+# ---------------------------------------------------------------------------
+# Codex runtime state
+# ---------------------------------------------------------------------------
+
+codex/auth.json
+codex/history.jsonl
+codex/sessions/
+codex/archived_sessions/
+codex/log/
+codex/logs/
+codex/shell_snapshots/
+codex/session_index.jsonl
+codex/state_*.sqlite
+codex/state_*.sqlite-shm
+codex/state_*.sqlite-wal
+codex/version.json
+codex/.codex-global-state.json
+
+# Protect against accidentally copying ~/.codex into the repo
+.codex/
+
+# ---------------------------------------------------------------------------
+# zsh runtime state
+# ---------------------------------------------------------------------------
+
+.zsh_history
+.zsh_sessions/
+.zcompdump*
+
+# ---------------------------------------------------------------------------
+# Local databases and generated state
+# ---------------------------------------------------------------------------
+
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+*.log
+
+# ---------------------------------------------------------------------------
+# Temporary files and backups
+# ---------------------------------------------------------------------------
+
+*.bak
+*.backup
+*.backup-*
+*.tmp
+*.swp
+*.swo
+*~
+
+# ---------------------------------------------------------------------------
+# Operating system and editor files
+# ---------------------------------------------------------------------------
+
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# --- Editor cruft ---
-*.swp
-*.swo
-*~
 .idea/
-.vscode/
+
+# Ignore .vscode contents but allow shareable files back in.
+# (Must be .vscode/* not .vscode/ — git cannot re-include files
+# inside an excluded directory.)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
