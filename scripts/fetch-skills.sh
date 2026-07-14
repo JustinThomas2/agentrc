@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 # Fetch pinned external skills and symlink all skills into the agents' dirs.
 #
-# 1. Reads skills.txt (lines of <git-url>@<tag-or-sha>; # comments allowed).
-# 2. Clones/updates each entry into skills/external/<name>/ (gitignored).
+# 1. Reads skills.txt: <git-url>@<tag-or-sha> [<path-in-repo>] [<tree-sha>]
+#    (# comments allowed; see skills.txt header for field meanings).
+# 2. Clones/updates each entry into skills/external/.repos/<name>/ (sparse
+#    when a path is given) and exposes the skill dir as
+#    skills/external/<name> (all gitignored). A pinned tree-sha is verified
+#    with git itself before the skill is exposed.
 # 3. Symlinks every skill folder — own skills in skills/ and fetched ones in
 #    skills/external/ — into ~/.claude/skills/ and ~/.codex/skills/.
 #
@@ -12,38 +16,85 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MANIFEST="$REPO_DIR/skills.txt"
 EXTERNAL_DIR="$REPO_DIR/skills/external"
+REPOS_DIR="$EXTERNAL_DIR/.repos"
 
-mkdir -p "$EXTERNAL_DIR" "$HOME/.claude/skills" "$HOME/.codex/skills"
+mkdir -p "$REPOS_DIR" "$HOME/.claude/skills" "$HOME/.codex/skills"
 
 # --- 1+2: fetch pinned external skills -------------------------------------
 if [[ -f "$MANIFEST" ]]; then
-  while IFS= read -r line; do
+  while IFS= read -r raw; do
     # Strip comments and surrounding whitespace; skip blanks.
-    line="${line%%#*}"
+    line="${raw%%#*}"
     line="$(echo "$line" | xargs)"
     [[ -z "$line" ]] && continue
 
-    ref="${line##*@}"
-    url="${line%@*}"
-    if [[ "$url" == "$line" || -z "$ref" ]]; then
-      echo "error   bad manifest line (expected <url>@<version>): $line" >&2
+    read -r pin path tree <<<"$line"
+    ref="${pin##*@}"
+    url="${pin%@*}"
+    if [[ "$url" == "$pin" || -z "$ref" ]]; then
+      echo "error   bad manifest line (expected <url>@<version> [path] [tree-sha]): $line" >&2
       exit 1
     fi
 
-    name="$(basename "$url" .git)"
-    dest="$EXTERNAL_DIR/$name"
+    if [[ -n "$path" ]]; then
+      name="$(basename "$path")"
+    else
+      name="$(basename "$url" .git)"
+    fi
+    repo="$REPOS_DIR/$name"
 
-    if [[ -d "$dest/.git" ]]; then
+    if [[ -d "$repo/.git" ]]; then
       echo "update  $name @ $ref"
-      git -C "$dest" fetch --quiet origin "$ref" 2>/dev/null || git -C "$dest" fetch --quiet origin
-      git -C "$dest" checkout --quiet "$ref"
+      if git -C "$repo" fetch --quiet --depth 1 origin "$ref" 2>/dev/null; then
+        git -C "$repo" checkout --quiet --detach FETCH_HEAD
+      else
+        git -C "$repo" fetch --quiet origin
+        git -C "$repo" checkout --quiet --detach "$ref"
+      fi
     else
       echo "fetch   $name @ $ref"
-      # --branch works for tags and branches; fall back to full clone for SHAs.
-      if ! git clone --quiet --depth 1 --branch "$ref" "$url" "$dest" 2>/dev/null; then
-        git clone --quiet "$url" "$dest"
-        git -C "$dest" checkout --quiet "$ref"
+      # Sparse, blob-filtered clone keeps subdirectory skills cheap.
+      # --branch works for tags and branches; fall back for raw SHAs.
+      if ! git clone --quiet --depth 1 --branch "$ref" --filter=blob:none --sparse "$url" "$repo" 2>/dev/null; then
+        git clone --quiet --filter=blob:none --sparse "$url" "$repo"
+        git -C "$repo" checkout --quiet --detach "$ref"
       fi
+    fi
+    if [[ -n "$path" ]]; then
+      git -C "$repo" sparse-checkout set "$path"
+    else
+      git -C "$repo" sparse-checkout disable
+    fi
+
+    # Integrity pin: refuse content that doesn't match the recorded tree.
+    if [[ -n "$tree" ]]; then
+      if [[ -n "$path" ]]; then
+        actual="$(git -C "$repo" rev-parse "HEAD:$path")"
+      else
+        actual="$(git -C "$repo" rev-parse 'HEAD^{tree}')"
+      fi
+      if [[ "$actual" != "$tree" ]]; then
+        echo "error   $name: tree sha mismatch (pinned $tree, fetched $actual) — refusing to install" >&2
+        exit 1
+      fi
+    fi
+
+    # Expose the skill dir as skills/external/<name>.
+    src="$repo"
+    [[ -n "$path" ]] && src="$repo/$path"
+    if [[ ! -f "$src/SKILL.md" ]]; then
+      echo "error   $name: no SKILL.md at ${path:-repo root}" >&2
+      exit 1
+    fi
+    dst="$EXTERNAL_DIR/$name"
+    if [[ ! -L "$dst" || "$(readlink -f "$dst")" != "$(readlink -f "$src")" ]]; then
+      if [[ -L "$dst" ]]; then
+        rm "$dst"
+      elif [[ -e "$dst" ]]; then
+        echo "error   $dst exists and is not a symlink — move it aside first" >&2
+        exit 1
+      fi
+      ln -s "$src" "$dst"
     fi
   done < "$MANIFEST"
 fi

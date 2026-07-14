@@ -38,7 +38,7 @@ Shared guidance goes in `AGENTS.md`; anything agent-specific goes in that agent'
 
 My own skills live in `skills/`, one folder per skill with a `SKILL.md` ([agentskills.io](https://agentskills.io) format). Third-party skills are **not** committed to this repo. Instead:
 
-- `skills.txt` pins each external skill as `URL@version` (tag or commit SHA).
+- `skills.txt` pins each external skill as `URL@version` (tag or commit SHA), plus an optional in-repo path for skills nested inside larger repos (fetched sparsely) and an optional tree-sha integrity pin — tags can be re-pointed upstream, a git tree sha cannot.
 - `scripts/fetch-skills.sh` clones each pin into `skills/external/<name>/` (gitignored), then symlinks every skill folder — mine and fetched — into `~/.claude/skills/` and `~/.codex/skills/`.
 
 Why referenced instead of vendored: vendoring would republish other people's code under this repo (a licensing problem), and pinned references make updates an explicit, reviewable one-line change instead of silent drift. **Everything under `skills/external/` retains its own upstream license and is never committed here.**

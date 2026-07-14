@@ -1,13 +1,25 @@
-# External skills manifest — one skill per line, pinned as URL@version.
+# External skills manifest — one skill per line, pinned to an exact version.
 #
-# Format:  <git-clone-url>@<tag-or-commit-sha>
-#   - The skill's directory name is derived from the repo name.
-#   - Pin to a tag or full commit SHA, never a branch, so installs are
-#     reproducible and updates are an explicit edit to this file.
+# Format:  <git-clone-url>@<tag-or-commit-sha>  [<path-in-repo>]  [<tree-sha>]
 #
-# scripts/fetch-skills.sh reads this file and clones each entry into
-# skills/external/<name>/ (gitignored — external skills are referenced,
-# never vendored/committed, and retain their own licenses).
+#   url@version    Pin to a tag or full commit SHA, never a branch, so installs
+#                  are reproducible and updates are an explicit edit here.
+#   path-in-repo   Only for skills that live in a subdirectory of a larger
+#                  repo; fetched with a sparse checkout. The skill is named
+#                  after the path's basename (otherwise the repo's).
+#   tree-sha       Optional integrity pin: the git tree object of the skill
+#                  directory — `git rev-parse '<version>:<path>'`, or
+#                  '<version>^{tree}' for whole-repo skills. Tags can be
+#                  re-pointed upstream; a tree sha cannot. fetch-skills.sh
+#                  refuses to install content that doesn't match.
+#
+# Name/description are NOT recorded here — they live in the fetched SKILL.md.
+#
+# scripts/fetch-skills.sh clones each entry into skills/external/ (gitignored —
+# external skills are referenced, never vendored/committed, and retain their
+# own licenses).
 #
 # Example:
 # https://github.com/example-org/example-skill@v1.2.0
+
+https://github.com/cli/cli@v2.96.0 skills/gh cc6ec4740cd90d35fdec0bb125ccbd5ad38e98e0
