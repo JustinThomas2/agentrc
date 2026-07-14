@@ -21,6 +21,7 @@ REPOS_DIR="$EXTERNAL_DIR/.repos"
 mkdir -p "$REPOS_DIR" "$HOME/.claude/skills" "$HOME/.codex/skills"
 
 # --- 1+2: fetch pinned external skills -------------------------------------
+seen_names=" "
 if [[ -f "$MANIFEST" ]]; then
   while IFS= read -r raw; do
     # Strip comments and surrounding whitespace; skip blanks.
@@ -41,7 +42,22 @@ if [[ -f "$MANIFEST" ]]; then
     else
       name="$(basename "$url" .git)"
     fi
+    if [[ "$seen_names" == *" $name "* ]]; then
+      echo "error   duplicate skill name '$name' derived from manifest — rename one entry's repo/path" >&2
+      exit 1
+    fi
+    seen_names+="$name "
     repo="$REPOS_DIR/$name"
+
+    # Supply-chain guard: a cached clone must still point at the manifest's
+    # URL. On mismatch, drop the cache (it's disposable) and re-clone.
+    if [[ -d "$repo/.git" ]]; then
+      origin="$(git -C "$repo" remote get-url origin 2>/dev/null || true)"
+      if [[ "$origin" != "$url" ]]; then
+        echo "warn    $name: cached clone origin '$origin' != manifest '$url' — re-cloning" >&2
+        rm -rf "$repo"
+      fi
+    fi
 
     if [[ -d "$repo/.git" ]]; then
       echo "update  $name @ $ref"
@@ -87,7 +103,7 @@ if [[ -f "$MANIFEST" ]]; then
       exit 1
     fi
     dst="$EXTERNAL_DIR/$name"
-    if [[ ! -L "$dst" || "$(readlink -f "$dst")" != "$(readlink -f "$src")" ]]; then
+    if [[ ! -L "$dst" || "$(readlink "$dst")" != "$src" ]]; then
       if [[ -L "$dst" ]]; then
         rm "$dst"
       elif [[ -e "$dst" ]]; then
@@ -105,7 +121,7 @@ link_skill() {
   name="$(basename "$src")"
   for target in "$HOME/.claude/skills" "$HOME/.codex/skills"; do
     dst="$target/$name"
-    if [[ -L "$dst" && "$(readlink -f "$dst")" == "$(readlink -f "$src")" ]]; then
+    if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
       echo "ok      $dst"
       continue
     fi

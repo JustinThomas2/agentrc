@@ -76,7 +76,7 @@ No third-party scanning tools — the safety rails are deliberately self-contain
 1. **`.gitignore` is the primary rail.** Real configs that can hold tokens (`codex/config.toml`, `agents/mcp/servers.json`), `.local` files, `.env*`, keys, and `secrets/` are all ignored; only `*.example` placeholders are committed.
 2. **`.githooks/pre-commit`** (own script, zero dependencies) refuses to commit any staged file that `.gitignore` says to ignore (catches accidental `git add -f`), and scans added lines for high-signal secret formats — private keys and AWS/GitHub/Slack/Anthropic/OpenAI/Google token shapes. Extend its patterns array as needed. `install.sh` enables it via `git config core.hooksPath .githooks`.
 
-   Git runs exactly one hooksPath, so the hooks chain instead: this repo's hook ends by running the global `~/.githooks/pre-commit` (from `git/.githooks/`), and the global hook in turn runs a repo's own `.git/hooks/pre-commit` when one exists, so it never silences other repos' hooks.
+   Git runs exactly one hooksPath, so the hooks chain instead: this repo's hook ends by running the global `~/.githooks/pre-commit` (from `git/.githooks/`), and the global hook in turn runs a repo's own `.git/hooks/pre-commit` when one exists, so it never silences other repos' hooks. The reverse does not hold: a repo that sets its own local `core.hooksPath` (husky, this repo itself) takes precedence over `~/.githooks` entirely — its hooks run and the global ones don't, unless that repo chains back the way this one does.
 3. Enable **GitHub push protection** on the repo (Settings → Code security → Secret scanning → Push protection) as a server-side backstop — hooks can be bypassed, push protection can't.
 
 ## License

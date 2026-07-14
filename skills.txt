@@ -15,6 +15,9 @@
 #
 # Name/description are NOT recorded here — they live in the fetched SKILL.md.
 #
+# A '#' starts a comment anywhere on a line, so no field may contain '#'.
+# Each entry's derived name (path or repo basename) must be unique.
+#
 # scripts/fetch-skills.sh clones each entry into skills/external/ (gitignored —
 # external skills are referenced, never vendored/committed, and retain their
 # own licenses).

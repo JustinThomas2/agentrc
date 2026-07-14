@@ -19,8 +19,10 @@ link() {
 
   mkdir -p "$(dirname "$dst")"
 
-  # Already linked to the right place — nothing to do.
-  if [[ -L "$dst" && "$(readlink -f "$dst")" == "$(readlink -f "$src")" ]]; then
+  # Already linked to the right place — nothing to do. Compare the raw link
+  # target (we always create links with this exact absolute path); avoids
+  # readlink -f, which older macOS lacks.
+  if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
     echo "ok      $dst"
     return
   fi
@@ -63,8 +65,13 @@ else
 fi
 
 # Enable the committed pre-commit hook (secret checks) for this repo.
-git -C "$REPO_DIR" config core.hooksPath .githooks
-echo "ok      core.hooksPath = .githooks"
+# Non-fatal: symlinks above are already valid, and re-running install.sh
+# after fixing the cause converges (the whole script is idempotent).
+if git -C "$REPO_DIR" config core.hooksPath .githooks 2>/dev/null; then
+  echo "ok      core.hooksPath = .githooks"
+else
+  echo "warn    could not set repo hooks — run: git -C $REPO_DIR config core.hooksPath .githooks" >&2
+fi
 
 echo
 echo "Done. Run scripts/fetch-skills.sh to fetch external skills and link all skills."
