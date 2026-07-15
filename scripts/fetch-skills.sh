@@ -128,8 +128,12 @@ link_skill() {
     if [[ -L "$dst" ]]; then
       rm "$dst"
     elif [[ -e "$dst" ]]; then
-      echo "skip    $dst exists and is not a symlink (move it aside first)" >&2
-      continue
+      # Pre-existing real copy (e.g. hand-installed before agentrc): back it
+      # up and replace with the managed symlink, same policy as install.sh.
+      bak="$dst.bak"
+      [[ -e "$bak" ]] && bak="$dst.bak.$(date +%Y%m%d%H%M%S)"
+      mv "$dst" "$bak"
+      echo "backup  $dst -> $bak"
     fi
     ln -s "$src" "$dst"
     echo "link    $dst -> $src"
