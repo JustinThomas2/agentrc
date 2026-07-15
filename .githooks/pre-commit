@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Self-contained pre-commit safety checks. No third-party tools.
+# Enabled via: git config core.hooksPath .githooks (scripts/install.sh does this.)
+#
+#   1. Refuse to commit any staged file that .gitignore says to ignore —
+#      catches accidental force-adds (git add -f) of secrets/.local files.
+#   2. Scan added lines for high-signal secret formats. Extend the patterns
+#      array as needed. *.example files and this hook itself are skipped.
+#
+# Bypass a false positive once with: git commit --no-verify
+set -euo pipefail
+
+fail=0
+staged="$(git diff --cached --name-only --diff-filter=ACMR)"
+[[ -z "$staged" ]] && exit 0
+
+# --- 1. Force-added ignored files -------------------------------------------
+while IFS= read -r f; do
+  [[ -z "$f" ]] && continue
+  echo "pre-commit: '$f' is gitignored — it should never be committed (was it force-added?)" >&2
+  fail=1
+done < <(printf '%s\n' "$staged" | git check-ignore --stdin --no-index || true)
+
+# --- 2. Secret formats in added lines ---------------------------------------
+patterns=(
+  'BEGIN [A-Z ]*PRIVATE KEY'          # PEM/OpenSSH private keys
+  'AKIA[0-9A-Z]{16}'                  # AWS access key id
+  'gh[pousr]_[A-Za-z0-9]{36,}'        # GitHub tokens
+  'github_pat_[A-Za-z0-9_]{22,}'      # GitHub fine-grained PAT
+  'xox[baprs]-[0-9A-Za-z-]{10,}'      # Slack tokens
+  'sk-ant-[A-Za-z0-9_-]{20,}'         # Anthropic API key
+  'sk-proj-[A-Za-z0-9_-]{20,}'        # OpenAI API key
+  'AIza[0-9A-Za-z_-]{35}'             # Google API key
+)
+regex="$(IFS='|'; echo "${patterns[*]}")"
+
+while IFS= read -r f; do
+  case "$f" in
+    .githooks/*|*.example) continue ;;  # placeholder/example content by definition
+  esac
+  added="$(git diff --cached -U0 -- "$f" | grep -E '^\+[^+]' || true)"
+  if [[ -n "$added" ]] && grep -Eq "$regex" <<<"$added"; then
+    echo "pre-commit: possible secret in '$f':" >&2
+    grep -E "$regex" <<<"$added" | head -3 | cut -c1-60 | sed 's/^/    /' >&2
+    fail=1
+  fi
+done <<<"$staged"
+
+if [[ "$fail" -ne 0 ]]; then
+  echo "pre-commit: commit blocked. If this is a false positive, bypass once with 'git commit --no-verify'." >&2
+  exit 1
+fi
+
+# Chain to the global hooks — this repo's local core.hooksPath overrides
+# ~/.githooks, so run the global pre-commit explicitly.
+if [[ -x "$HOME/.githooks/pre-commit" ]]; then
+  exec "$HOME/.githooks/pre-commit" "$@"
+fi

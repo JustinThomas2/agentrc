@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This repo's local core.hooksPath overrides ~/.githooks, so forward to the
+# global pre-push explicitly. exec preserves stdin (the pushed-refs list) and
+# the remote name/URL args, so no buffering is needed here.
+if [ -x "$HOME/.githooks/pre-push" ]; then
+  exec "$HOME/.githooks/pre-push" "$@"
+fi
+exit 0
