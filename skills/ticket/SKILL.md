@@ -16,9 +16,11 @@ none, ask for it before doing anything else.
 1. Run `gh issue view ISSUE` and read the issue. Summarize it and its
    acceptance criteria in your own words. If anything is ambiguous, ask me
    BEFORE writing any code.
-2. Make sure main is current (`git fetch`, then fast-forward), and create a
-   branch named `<type>/ISSUE-<short-slug>` off it, following the branch
-   naming and commit conventions in my agent instructions (AGENTS.md).
+2. Switch to main - if the working tree has WIP, stash it or commit it
+   first, never carry it along silently - then `git pull`. Create a branch
+   named `<type>/ISSUE-<short-slug>` off the freshly pulled main (never off
+   another feature branch), following the branch naming and commit
+   conventions in my agent instructions (AGENTS.md).
 3. Implement the change. Add or adjust tests where they apply. Run the
    project's linter and test suite and get them passing.
 4. Commit in logical units using Conventional Commit messages.
