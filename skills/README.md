@@ -32,3 +32,11 @@ rely on harness-specific preprocessing:
 Harness-specific **frontmatter** extras (`argument-hint`, `allowed-tools`,
 `disable-model-invocation`, …) are fine: unknown fields are ignored, so they
 enhance one harness without breaking another.
+
+## Show before posting
+
+Any skill that posts content to an external service (GitHub issues, PRs,
+review replies, …) must show the exact content as plain text in the
+conversation and get approval BEFORE the call that posts it. Command
+approval prompts only display the command — often just a `--body-file`
+path — so the chat text is the only real review surface.
