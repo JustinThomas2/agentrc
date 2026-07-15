@@ -31,5 +31,12 @@ project's.
 
 - Branch naming: `<type>/<issue-number>-<short-slug>` (e.g. `feat/142-dark-mode`)
 - Commits: Conventional Commits (feat:, fix:, chore:, docs:, refactor:)
+- Starting new work: switch to main (stash or commit WIP only if needed),
+  pull, then create the feature branch off the fresh main. Never branch off
+  another feature branch unless I explicitly say to.
+- Before the final push of a branch (opening a PR, or pushing review
+  fixes): switch to main, pull, return to the branch, rebase it onto main,
+  and resolve any conflicts. If the branch was already pushed, push with
+  `git push --force-with-lease`, never bare `--force`.
 - NEVER push or open a PR without my explicit go-ahead.
 - PR bodies must include `Closes #<issue-number>`.
