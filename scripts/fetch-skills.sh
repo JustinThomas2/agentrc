@@ -130,8 +130,12 @@ link_skill() {
     elif [[ -e "$dst" ]]; then
       # Pre-existing real copy (e.g. hand-installed before agentrc): back it
       # up and replace with the managed symlink, same policy as install.sh.
-      bak="$dst.bak"
-      [[ -e "$bak" ]] && bak="$dst.bak.$(date +%Y%m%d%H%M%S)"
+      # The backup goes OUTSIDE the skills dir — harnesses scan every folder
+      # in it, so an in-place .bak would register as a duplicate skill.
+      bakdir="$target.bak"
+      mkdir -p "$bakdir"
+      bak="$bakdir/$name"
+      [[ -e "$bak" ]] && bak="$bakdir/$name.$(date +%Y%m%d%H%M%S)"
       mv "$dst" "$bak"
       echo "backup  $dst -> $bak"
     fi
