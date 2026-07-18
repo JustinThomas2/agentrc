@@ -38,10 +38,8 @@ merits — never apply a suggestion just because someone made it.
      conflict with my stated intent; ask me BEFORE changing anything
 4. Apply the accepted changes. Add or adjust tests where they apply, and
    run the project's linter and test suite per AGENTS.md. Commit in
-   logical units using Conventional Commit messages, ending every
-   commit message with the AI-attribution trailer, on its own line
-   after any other trailers:
-   `Drafted-by: LLM (reviewed by Justin)`
+   logical units using Conventional Commit messages, each ending with
+   the AI-attribution trailer from AGENTS.md.
 5. STOP — do not push, and do not reply to, resolve, or react to any
    comment on GitHub (responding to reviewers is out of scope for this
    skill). Show me:

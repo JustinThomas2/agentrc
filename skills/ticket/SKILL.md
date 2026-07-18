@@ -23,10 +23,8 @@ none, ask for it before doing anything else.
    conventions in my agent instructions (AGENTS.md).
 3. Implement the change. Add or adjust tests where they apply. Run the
    project's linter and test suite and get them passing.
-4. Commit in logical units using Conventional Commit messages. End
-   every commit message with the AI-attribution trailer, on its own
-   line after any other trailers:
-   `Drafted-by: LLM (reviewed by Justin)`
+4. Commit in logical units using Conventional Commit messages, each
+   ending with the AI-attribution trailer from AGENTS.md.
 5. STOP — do not push and do not open a PR. Show me:
    - the branch name
    - a short summary of what changed and why
