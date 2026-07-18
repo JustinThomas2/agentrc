@@ -24,6 +24,7 @@ skill to invoke next.
 - `file-issue` turns a rough idea into a GitHub issue.
 - `work-issue` implements an issue on a local branch and stops before pushing.
 - `open-pr` pushes the branch and opens the PR after approval.
+- `review-pr` reviews a pull request and posts approved feedback comments.
 - `address-feedback` applies valid reviewer feedback and stops before pushing.
 - `respond-feedback` posts approved reviewer replies.
 
