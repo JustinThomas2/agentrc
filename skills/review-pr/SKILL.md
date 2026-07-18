@@ -21,8 +21,10 @@ so. Rank what you do find so the author knows what matters.
 1. Gather context, read-only:
    - `gh pr view PR` for the metadata, body, and linked issue
    - `gh pr diff PR --patch` for the full diff
-   - `gh pr view PR --comments` for existing discussion, so you don't
-     repeat feedback already given
+   - `gh pr view PR --comments` for existing discussion, and
+     `gh api --method GET repos/{owner}/{repo}/pulls/PR/comments` for
+     inline review threads (file and line), so you don't repeat
+     feedback already given at either level
    - `gh issue view N` for the issue the PR closes, so findings can be
      checked against its acceptance criteria and guardrails
 2. Review the diff on its merits:
