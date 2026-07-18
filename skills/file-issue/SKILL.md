@@ -32,8 +32,8 @@ act on it without guessing.
    - **Guardrails** — constraints and non-goals; omit if none apply
    - **Acceptance criteria** — a `- [ ]` checklist of verifiable
      outcomes the `ticket` skill can work from and check off
-   - End the body with the AI-attribution footer as its last line:
-     `*Drafted by an LLM; reviewed and approved by Justin.*`
+   - End the body with the AI-attribution footer from AGENTS.md as its
+     last line.
 4. STOP — show me the full draft (title and body) and wait for my
    approval. Revise per my feedback until I approve.
 5. Only after approval, file it with `gh issue create`.

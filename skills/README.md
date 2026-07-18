@@ -35,24 +35,12 @@ enhance one harness without breaking another.
 
 ## AI attribution
 
-Anything a skill publishes under my name must disclose that an LLM
-drafted it and I reviewed it. One canonical phrasing per medium - skills
-inline these strings verbatim (a running skill cannot read this README,
-since only skill folders are symlinked into the harness dirs):
-
-- Git commits - final trailer line:
-  `Drafted-by: LLM (reviewed by Justin)`
-- Issue bodies and PR/review comments - last line:
-  `*Drafted by an LLM; reviewed and approved by Justin.*`
-- PR bodies - a `---` horizontal rule followed by the disclosure line,
-  at the top of the body so hand-written sections can be added above it
-  during review (the rule must come BEFORE the text - text immediately
-  followed by `---` renders as a setext heading):
-  `*Everything below this line was drafted by an LLM and reviewed by Justin.*`
-
-Keep each harness's built-in attribution (e.g. Claude Code's
-`attribution` settings) disabled so published content never carries two
-disclosures.
+Published content (commits, issues, PR bodies, review replies) must
+carry the AI-attribution note defined in AGENTS.md - one canonical
+phrasing per medium. AGENTS.md is always in the agents' context, so
+skills don't inline the strings; they carry a short reminder at the
+point where they compose content and defer to AGENTS.md for the exact
+wording.
 
 ## Show before posting
 

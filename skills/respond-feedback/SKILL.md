@@ -32,8 +32,8 @@ posted before I have read it.
    - applied items: "addressed in `<sha>`" plus a one-line what/why
    - declined items: the reasoning, stated respectfully and concretely
    - escalated items: the decision made, or an honest "still discussing"
-   - end every reply with the AI-attribution footer as its last line:
-     `*Drafted by an LLM; reviewed and approved by Justin.*`
+   - end every reply with the AI-attribution footer from AGENTS.md as
+     its last line
 3. STOP — show me every draft reply in the conversation, mapped to its
    thread, and wait for my approval; revise until I approve. Never post
    anything I have not seen in chat.

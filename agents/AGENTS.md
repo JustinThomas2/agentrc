@@ -40,3 +40,21 @@ project's.
   `git push --force-with-lease`, never bare `--force`.
 - NEVER push or open a PR without my explicit go-ahead.
 - PR bodies must include `Closes #<issue-number>`.
+
+## AI attribution
+
+Anything an agent publishes under my name must disclose that an LLM
+drafted it and I reviewed it. Canonical phrasings - use these verbatim,
+one per medium:
+
+- Git commits - final trailer line, after any other trailers:
+  `Drafted-by: LLM (reviewed by Justin)`
+- Issue bodies and PR/review comments - last line:
+  `*Drafted by an LLM; reviewed and approved by Justin.*`
+- PR bodies - at the top, a `---` horizontal rule followed by:
+  `*Everything below this line was drafted by an LLM and reviewed by Justin.*`
+  My hand-written sections go above the rule. The rule must come BEFORE
+  the text; text immediately followed by `---` renders as a heading.
+
+Keep harness built-in attribution (e.g. Claude Code's `attribution`
+settings) disabled so published content never carries two disclosures.
