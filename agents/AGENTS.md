@@ -14,6 +14,15 @@ Agent-specific overrides go in that agent's own file, not here.
 - For non-trivial changes, make a short plan before implementation.
 - For bugs, reproduce the issue before fixing when practical.
 - Prefer functional TypeScript patterns over classes unless the project clearly uses classes.
+- Always use type annotations where the language supports them (Python type
+  hints, TypeScript over untyped JavaScript, etc.). Untyped code is
+  acceptable only where the language offers no typing. Prefer precise types
+  over escape hatches like `Any` (narrow unknown data with runtime checks
+  instead); whether to strictly enforce that is each project's own call.
+- Avoid regular expressions in code that gets saved, executed, or read by
+  humans; prefer explicit string operations. A one-off regex inside an
+  ad-hoc shell command an agent runs is fine. Committing a regex requires
+  an extremely strong justification - state it in a comment, or don't use one.
 - Do not add dependencies without explaining why the existing stack is insufficient.
 - Keep responses concise unless Justin asks for deeper explanation.
 - Avoid em dashes in prose. Use plain dashes instead.
