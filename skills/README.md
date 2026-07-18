@@ -33,6 +33,25 @@ Harness-specific **frontmatter** extras (`argument-hint`, `allowed-tools`,
 `disable-model-invocation`, …) are fine: unknown fields are ignored, so they
 enhance one harness without breaking another.
 
+## AI attribution
+
+Anything a skill publishes under my name must disclose that an LLM
+drafted it and I reviewed it. One canonical phrasing per medium - skills
+inline these strings verbatim (a running skill cannot read this README,
+since only skill folders are symlinked into the harness dirs):
+
+- Git commits - final trailer line:
+  `Drafted-by: LLM (reviewed by Justin)`
+- Issue bodies and PR/review comments - last line:
+  `*Drafted by an LLM; reviewed and approved by Justin.*`
+- PR bodies - first line, so hand-written sections can be added above it
+  during review:
+  `*Everything below this line was drafted by an LLM and reviewed by Justin.*`
+
+Keep each harness's built-in attribution (e.g. Claude Code's
+`attribution` settings) disabled so published content never carries two
+disclosures.
+
 ## Show before posting
 
 Any skill that posts content to an external service (GitHub issues, PRs,
