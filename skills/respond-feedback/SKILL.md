@@ -43,4 +43,5 @@ posted before I have read it.
    for inline threads and `gh pr comment` for top-level responses.
 5. Never resolve threads, never add reactions, never push — replies
    only. Resolving is the reviewer's call, not ours.
-6. Reply with a summary of what was posted, with links.
+6. Reply with a summary of what was posted, with links. This is the end of
+   the issue-to-PR workflow.

@@ -11,9 +11,9 @@ IDEA = $ARGUMENTS — if that reads as a literal placeholder instead of a
 description, use the description I gave when invoking this skill. If I
 gave none, ask what the issue is about before doing anything else.
 
-Issues drive the rest of the workflow: the `ticket` skill reads them and
+Issues drive the rest of the workflow: the `work-issue` skill reads them and
 works from their acceptance criteria. A vague issue degrades everything
-downstream, so the goal here is a draft concrete enough that `ticket` can
+downstream, so the goal here is a draft concrete enough that `work-issue` can
 act on it without guessing.
 
 ## Your task
@@ -31,11 +31,12 @@ act on it without guessing.
    - **Proposal** — the intended change, concrete enough to implement
    - **Guardrails** — constraints and non-goals; omit if none apply
    - **Acceptance criteria** — a `- [ ]` checklist of verifiable
-     outcomes the `ticket` skill can work from and check off
+     outcomes the `work-issue` skill can work from and check off
    - End the body with the AI-attribution footer from AGENTS.md as its
      last line.
 4. STOP — show me the full draft (title and body) and wait for my
    approval. Revise per my feedback until I approve.
 5. Only after approval, file it with `gh issue create`.
    (This will ask for my approval — that is intentional; wait for it.)
-6. Reply with the issue URL.
+6. Reply with the issue URL. When you're satisfied, invoke `work-issue`
+   with issue N.
