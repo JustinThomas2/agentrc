@@ -1,6 +1,6 @@
 ---
-name: ship
-description: Push the current branch and open a PR for the issue it addresses. Invoke explicitly with an issue number.
+name: open-pr
+description: Push the current branch and open a PR for the issue it addresses, then STOP with the PR URL. Invoke explicitly with an issue number.
 # The fields below are Claude Code extras; other harnesses ignore them.
 argument-hint: "[issue-number]"
 disable-model-invocation: true
@@ -14,7 +14,7 @@ none, ask for it before doing anything else.
 ## Your task
 
 1. Run `git status -sb` and `git log main..HEAD --oneline` to see what is
-   being shipped. If the working tree is dirty or there are no commits
+   being opened for review. If the working tree is dirty or there are no commits
    ahead of main, stop and tell me instead of pushing.
 2. Sync with main per AGENTS.md: switch to main, `git pull`, switch back
    to this branch, then rebase it onto main and resolve any conflicts.
@@ -38,4 +38,5 @@ none, ask for it before doing anything else.
    (This will ask for my approval — that is intentional; wait for it.)
 7. Open the PR with `gh pr create`, using the approved title and body
    exactly. (This will also ask for my approval — wait for it.)
-8. Reply with the PR URL.
+8. Reply with the PR URL. When you're satisfied, invoke `address-feedback`
+   with PR N.

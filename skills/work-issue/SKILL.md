@@ -1,6 +1,6 @@
 ---
-name: ticket
-description: Start work on a GitHub issue — read it, create a branch, implement the change, commit, then STOP for my review. Invoke explicitly with an issue number.
+name: work-issue
+description: Work from a GitHub issue — read it, create a branch, implement the change, commit, then STOP for my review. Invoke explicitly with an issue number.
 # The fields below are Claude Code extras; other harnesses ignore them.
 argument-hint: "[issue-number]"
 disable-model-invocation: true
@@ -29,5 +29,5 @@ none, ask for it before doing anything else.
    - the branch name
    - a short summary of what changed and why
    - `git diff main...HEAD --stat` plus the key hunks
-     Then wait for my review. When I'm satisfied I'll invoke the `ship`
-     skill with this issue number.
+     Then wait for my review. When you're satisfied, invoke `open-pr`
+     with issue N.
