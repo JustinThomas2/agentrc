@@ -49,4 +49,5 @@ merits — never apply a suggestion just because someone made it.
      Then wait for my review. I'll push when I'm satisfied. Whoever ends
      up pushing must first sync per AGENTS.md: pull main, rebase this
      branch onto it, resolve conflicts, then push with
-     `--force-with-lease` since the branch is already published.
+     `--force-with-lease` since the branch is already published. When
+     you're satisfied, invoke `respond-feedback` with PR N.
