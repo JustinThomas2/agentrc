@@ -1,3 +1,5 @@
+*Everything below this line was drafted by an LLM and reviewed by Justin.*
+
 ## Summary
 <!-- What changed and why, in 2-4 sentences. -->
 

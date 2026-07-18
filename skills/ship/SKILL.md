@@ -23,6 +23,9 @@ none, ask for it before doing anything else.
 3. Read the PR body template bundled with this skill at `pr-template.md`.
 4. Compose the PR title and body, filling every section of that template:
    - title aligned with the primary commit
+   - the AI-attribution marker as the body's first line, exactly as it
+     appears in the template - everything below it is LLM-drafted; any
+     hand-written sections I add during review go above it
    - a summary of what changed and why
    - the testing you performed
    - `Closes #ISSUE` in the body
