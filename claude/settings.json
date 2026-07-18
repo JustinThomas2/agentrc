@@ -52,11 +52,8 @@
     ],
     "ask": [
       "Edit(.github/**)",
-      "Write(.github/**)",
       "Edit(**/Dockerfile*)",
-      "Write(**/Dockerfile*)",
       "Edit(**/docker-compose*.yml)",
-      "Write(**/docker-compose*.yml)",
       "Bash(git push:*)",
       "Bash(npm install:*)",
       "Bash(pnpm add:*)",
