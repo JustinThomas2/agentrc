@@ -44,8 +44,10 @@ since only skill folders are symlinked into the harness dirs):
   `Drafted-by: LLM (reviewed by Justin)`
 - Issue bodies and PR/review comments - last line:
   `*Drafted by an LLM; reviewed and approved by Justin.*`
-- PR bodies - first line, so hand-written sections can be added above it
-  during review:
+- PR bodies - a `---` horizontal rule followed by the disclosure line,
+  at the top of the body so hand-written sections can be added above it
+  during review (the rule must come BEFORE the text - text immediately
+  followed by `---` renders as a setext heading):
   `*Everything below this line was drafted by an LLM and reviewed by Justin.*`
 
 Keep each harness's built-in attribution (e.g. Claude Code's
