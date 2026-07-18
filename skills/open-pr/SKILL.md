@@ -16,10 +16,10 @@ none, ask for it before doing anything else.
 1. Run `git status -sb` and `git log main..HEAD --oneline` to see what is
    being opened for review. If the working tree is dirty or there are no commits
    ahead of main, stop and tell me instead of pushing.
-2. Sync with main per AGENTS.md: switch to main, `git pull`, switch back
-   to this branch, then rebase it onto main and resolve any conflicts.
-   Re-run the step 1 checks afterwards. If this branch was pushed before,
-   the coming push needs `--force-with-lease`, never bare `--force`.
+2. No pre-push sync is needed. If GitHub reports the opened PR cannot
+   be merged cleanly, then per AGENTS.md: pull main, rebase this branch
+   onto it, resolve conflicts, and push with `--force-with-lease`,
+   never bare `--force`.
 3. Read the PR body template bundled with this skill at `pr-template.md`.
 4. Compose the PR title and body, filling every section of that template:
    - title aligned with the primary commit
