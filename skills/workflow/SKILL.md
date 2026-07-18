@@ -23,6 +23,7 @@ Print this compact map first, one line per skill:
 - `file-issue`: rough idea -> GitHub issue draft or filed issue; stops before filing for approval.
 - `work-issue`: issue number -> local branch with committed implementation; stops before push or PR.
 - `open-pr`: issue number -> pushed branch and opened PR; stops after reporting the PR URL.
+- `review-pr`: PR number -> posted review feedback comment; stops before posting for approval.
 - `address-feedback`: PR number -> committed review fixes; stops before push or reviewer replies.
 - `respond-feedback`: PR number -> posted approved reviewer replies; ends the workflow.
 
@@ -50,6 +51,7 @@ Choose the next invocation this way:
 - On `main` with no feature branch context: `file-issue` with the rough idea.
 - On a non-main branch with uncommitted changes: finish or discard the local changes before invoking another pipeline skill.
 - On a non-main branch with commits ahead of main and no PR: `open-pr` with issue N. Infer N from a branch segment like `16` in `refactor/16-workflow-skill-names`; if no issue number is clear, say that the issue number is needed.
+- On a branch with an open PR and no review decision yet: `review-pr` with PR N to review it, or wait for an external review.
 - On a branch with an open PR and changes requested: `address-feedback` with PR N.
 - After review-fix commits are ready on a PR branch: `respond-feedback` with PR N once the fixes have been pushed and reviewed by Justin.
 - If the state is ambiguous, say what is missing instead of guessing.
