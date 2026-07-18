@@ -38,7 +38,7 @@ Use `gh pr status` to identify:
 
 - whether the current branch already has a PR
 - the PR number when present
-- whether there are review comments or requested changes visible in the status output
+- whether the visible review decision is approved, changes requested, or review required
 
 Then print:
 
@@ -50,6 +50,6 @@ Choose the next invocation this way:
 - On `main` with no feature branch context: `file-issue` with the rough idea.
 - On a non-main branch with uncommitted changes: finish or discard the local changes before invoking another pipeline skill.
 - On a non-main branch with commits ahead of main and no PR: `open-pr` with issue N. Infer N from a branch segment like `16` in `refactor/16-workflow-skill-names`; if no issue number is clear, say that the issue number is needed.
-- On a branch with an open PR and review feedback present: `address-feedback` with PR N.
+- On a branch with an open PR and changes requested: `address-feedback` with PR N.
 - After review-fix commits are ready on a PR branch: `respond-feedback` with PR N once the fixes have been pushed and reviewed by Justin.
 - If the state is ambiguous, say what is missing instead of guessing.

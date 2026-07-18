@@ -29,5 +29,4 @@ none, ask for it before doing anything else.
    - the branch name
    - a short summary of what changed and why
    - `git diff main...HEAD --stat` plus the key hunks
-     Then wait for my review. When you're satisfied, invoke `open-pr`
-     with issue N.
+     Then STOP. When I'm satisfied, I'll invoke `open-pr` with issue N.

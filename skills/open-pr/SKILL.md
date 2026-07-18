@@ -38,5 +38,5 @@ none, ask for it before doing anything else.
    (This will ask for my approval — that is intentional; wait for it.)
 7. Open the PR with `gh pr create`, using the approved title and body
    exactly. (This will also ask for my approval — wait for it.)
-8. Reply with the PR URL. When you're satisfied, invoke `address-feedback`
-   with PR N.
+8. Reply with the PR URL. Then STOP. Once review feedback arrives, I'll
+   invoke `address-feedback` with PR N.
