@@ -16,6 +16,17 @@ Third-party skills are never committed here. They are pinned in the top-level
 `scripts/fetch-skills.sh` symlinks every skill folder (own + external) into
 `~/.claude/skills/` and `~/.codex/skills/`.
 
+## Issue-to-PR workflow
+
+Use `workflow` to see where the current branch sits in the pipeline and which
+skill to invoke next.
+
+- `file-issue` turns a rough idea into a GitHub issue.
+- `work-issue` implements an issue on a local branch and stops before pushing.
+- `open-pr` pushes the branch and opens the PR after approval.
+- `address-feedback` applies valid reviewer feedback and stops before pushing.
+- `respond-feedback` posts approved reviewer replies.
+
 ## Writing model-agnostic skills
 
 Every skill here is linked into every harness, so skill **bodies** must not
