@@ -46,8 +46,6 @@ merits — never apply a suggestion just because someone made it.
    - a triage summary: each feedback item → apply / decline / escalate,
      with a one-line rationale
    - `git diff @{upstream}...HEAD --stat` plus the key hunks
-     Then STOP. When I'm satisfied, I'll sync and push the branch, then
-     invoke `respond-feedback` with PR N. Whoever pushes must first sync
-     per AGENTS.md: pull main, rebase this branch onto it, resolve
-     conflicts, then push with `--force-with-lease` since the branch is
-     already published.
+     Then STOP. When I'm satisfied, I'll push the branch (a plain push;
+     rebase only if the PR reports conflicts, per AGENTS.md), then
+     invoke `respond-feedback` with PR N.
