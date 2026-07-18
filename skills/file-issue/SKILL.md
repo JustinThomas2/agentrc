@@ -38,5 +38,5 @@ act on it without guessing.
    approval. Revise per my feedback until I approve.
 5. Only after approval, file it with `gh issue create`.
    (This will ask for my approval — that is intentional; wait for it.)
-6. Reply with the issue URL. When you're satisfied, invoke `work-issue`
-   with issue N.
+6. Reply with the issue URL. Then STOP. When I'm satisfied, I'll invoke
+   `work-issue` with issue N.

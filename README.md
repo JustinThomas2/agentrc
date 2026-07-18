@@ -68,7 +68,10 @@ cd agentrc
 ./scripts/fetch-skills.sh   # fetch pinned external skills + link all skills
 ```
 
-Re-running either script is safe. To pick up new external skill pins later, edit `skills.txt` and re-run `fetch-skills.sh`.
+Re-running either script is safe. After pulling changes that add, remove, or
+rename skills, re-run `scripts/fetch-skills.sh` so `~/.claude/skills/` and
+`~/.codex/skills/` match the repo. To pick up new external skill pins later,
+edit `skills.txt` and re-run `fetch-skills.sh`.
 
 ## Secret hygiene
 
