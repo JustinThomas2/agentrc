@@ -56,3 +56,9 @@ fi
 
 # Source the private/machine-local layer last so it can override anything above.
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
+keep_current_path() {
+  printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"
+}
+
+precmd_functions+=(keep_current_path)
