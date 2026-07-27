@@ -68,6 +68,12 @@ cd agentrc
 ./scripts/fetch-skills.sh   # fetch pinned external skills + link all skills
 ```
 
+Git identity is deliberately per-machine: the shared `.gitconfig` carries no
+`user.name`/`user.email` and sets `user.useConfigOnly`, so commits fail with a
+clear error until `~/.gitconfig.local` provides an identity (work email on the
+work machine, personal elsewhere). `install.sh` prompts to create it when
+missing, so this is normally handled during install.
+
 Re-running either script is safe. After pulling changes that add, remove, or
 rename skills, re-run `scripts/fetch-skills.sh` so `~/.claude/skills/` and
 `~/.codex/skills/` match the repo. To pick up new external skill pins later,
