@@ -3,13 +3,11 @@
 # PLACEHOLDER: real git config goes here (aliases, core settings, diff/merge).
 # Identity, signing keys, and machine-specific bits belong in ~/.gitconfig.local.
 
-[include]
-	# Private/machine-local layer. Git silently skips this if the file is missing.
-	path = ~/.gitconfig.local
-
 [user]
-	email = Justintt5365@gmail.com
-	name = Justin Thomas
+	# No identity here - this file is shared across machines. Each machine sets
+	# user.name/user.email in ~/.gitconfig.local (install.sh offers to create it).
+	# useConfigOnly makes git fail loudly instead of guessing an identity.
+	useConfigOnly = true
 [alias]
 	cm = "!f() { git commit -m \"$*\"; }; f"
 	lastcm = show --stat HEAD
@@ -25,3 +23,8 @@
 [core]
 	# ~ expands (pathname-type setting); keeps this portable across machines.
 	hooksPath = ~/.githooks
+
+[include]
+	# Private/machine-local layer. Kept LAST so it overrides everything above
+	# (git config is last-value-wins). Silently skipped if the file is missing.
+	path = ~/.gitconfig.local
