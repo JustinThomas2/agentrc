@@ -178,6 +178,11 @@ it("prices carts correctly", () => {
 Four requirements in one test. The first failing assertion hides the rest,
 so a run tells you one thing was wrong rather than which three still work.
 
+The stub is a second problem: it branches on the code to serve all four
+cases, which re-implements the real lookup's decision inside the test. A
+stub should return canned data, not decide. Splitting the test removes the
+need for it - each case pins the one rate it is about, as below.
+
 ### Good
 
 Separate tests when the requirements differ:

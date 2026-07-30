@@ -113,6 +113,14 @@ substitute a plain implementation in the test. That keeps the fake honest
 and readable, and it avoids coupling the test to the framework's
 patching mechanics.
 
+Whatever you fake, a stub should be data, not logic: it returns canned
+values, it does not decide anything. A fake that branches to mirror the
+real collaborator's decisions is a second copy of your logic living in
+the test, and like the tautological assert, two copies that agree prove
+nothing and drift apart silently. If a test only works with branching
+inside a fake, split the test so each case gets its own canned value, or
+stop faking and use the real collaborator.
+
 ## Worked examples
 
 `references/examples.md` has paired good and bad versions of these
