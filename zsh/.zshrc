@@ -62,3 +62,26 @@ keep_current_path() {
 }
 
 precmd_functions+=(keep_current_path)
+
+# Hook to give herd the current git repo
+update_herdr_repo() {
+  [[ -z "${HERDR_PANE_ID:-}" ]] && return
+
+  local root
+  root="$(git rev-parse --show-toplevel 2>/dev/null)"
+
+  if [[ -n "$root" ]]; then
+    herdr pane report-metadata "$HERDR_PANE_ID" \
+      --source repo-label \
+      --token "repo=${root:t}" \
+      >/dev/null 2>&1
+  else
+    herdr pane report-metadata "$HERDR_PANE_ID" \
+      --source repo-label \
+      --clear-token repo \
+      >/dev/null 2>&1
+  fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd update_herdr_repo
+update_herdr_repo
